@@ -1,28 +1,15 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+contrib/
 
-# Precompiled Headers
-*.gch
-*.pch
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+compile_commands.json
+Makefile
 
-# Compiled Dynamic libraries
+nbproject/
+
 *.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-
-# Compiled Static libraries
-*.lai
-*.la
 *.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
+*.o
+hints-server
+build/
