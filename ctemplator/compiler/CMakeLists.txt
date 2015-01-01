@@ -1,6 +1,6 @@
 add_library(ctemplator-compiler
+    Parser.cpp
     Tokenizer.cpp
-    Token.cpp
 )
 
 target_link_libraries(ctemplator-compiler

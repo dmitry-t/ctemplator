@@ -1,4 +1,5 @@
 add_subdirectory(compiler)
+add_subdirectory(nodes)
 
 add_library(ctemplator
     Engine.cpp
@@ -8,5 +9,6 @@ add_library(ctemplator
 
 target_link_libraries(ctemplator
     ctemplator-compiler
+    ctemplator-nodes
     PocoFoundation
 )

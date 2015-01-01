@@ -10,7 +10,7 @@ namespace compiler {
 class Tokenizer
 {
 public:
-    Tokenizer(std::vector<Token> tokens);
+    explicit Tokenizer(std::vector<Token> tokens);
 
     void tokenize(const std::string& templateString);
 

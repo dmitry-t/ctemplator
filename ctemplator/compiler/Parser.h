@@ -1,17 +1,15 @@
+#pragma once
+
 #include "ctemplator/compiler/Token.h"
 
 namespace ctemplator {
 namespace compiler {
 
-Token::Token(std::string name) :
-    name_(std::move(name))
+class Parser
 {
-}
-
-const std::string& Token::name() const
-{
-    return name_;
-}
+public:
+    void processToken(Token token);
+};
 
 } // namespace compiler
 } // namespace ctemplator

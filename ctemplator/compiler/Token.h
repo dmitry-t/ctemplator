@@ -2,20 +2,21 @@
 
 #include <string>
 
+#include "ctemplator/compiler/Lexeme.h"
+#include "ctemplator/compiler/TokenType.h"
+
 namespace ctemplator {
 namespace compiler {
 
 class Token
 {
 public:
-    Token(std::string name);
+    Token(std::string value, TokenType type, Lexeme lexeme);
 
-    const std::string& name() const;
-
-private:
-    std::string name_;
+    std::string value_;
+    TokenType type_;
+    Lexeme lexeme_;
 };
 
 } // namespace compiler
 } // namespace ctemplator
-
