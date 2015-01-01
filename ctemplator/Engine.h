@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ctemplator/FileStorage.h"
-#include "ctemplator/compiler/Tokenizer.h"
+#include "ctemplator/compiler/Parser.h"
 
 #include "Poco/Any.h"
 
@@ -20,7 +20,7 @@ public:
 
 private:
     FileStorage fileStorage_;
-    compiler::Tokenizer tokenizer_;
+    compiler::Parser parser_;
 };
 
 } // namespace ctemplator

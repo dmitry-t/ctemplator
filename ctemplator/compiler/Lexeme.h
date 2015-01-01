@@ -5,6 +5,7 @@ namespace compiler {
 
 enum class Lexeme
 {
+    TEXT,
     VALUE,
     IF,
     ELSE,

@@ -2,6 +2,7 @@
 
 #include "ctemplator/compiler/Token.h"
 
+#include <string>
 #include <vector>
 
 namespace ctemplator {
@@ -10,11 +11,12 @@ namespace compiler {
 class Tokenizer
 {
 public:
-    explicit Tokenizer(std::vector<Token> tokens);
+    Tokenizer(std::string text, std::vector<Token> tokens);
 
-    void tokenize(const std::string& templateString);
+    std::pair<Token, std::string> nextToken();
 
 private:
+    std::string text_;
     std::vector<Token> tokens_;
 };
 

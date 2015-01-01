@@ -6,8 +6,7 @@
 namespace ctemplator {
 
 Engine::Engine(const std::string& templateStorageRoot) :
-    fileStorage_(templateStorageRoot),
-    tokenizer_({})
+    fileStorage_(templateStorageRoot)
 {
 }
 

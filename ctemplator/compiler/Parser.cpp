@@ -3,10 +3,18 @@
 namespace ctemplator {
 namespace compiler {
 
-void Parser::processToken(Token token)
-{
+using nodes::Node;
 
+std::unique_ptr<Node> Parser::parse(const std::string& text)
+{
+    Tokenizer tokenizer(text, {
+                {"{", TokenType::OPEN, Lexeme::VALUE},
+                {"}", TokenType::CLOSE, Lexeme::VALUE},
+            });
+    auto tokenValue = tokenizer.nextToken();
+    return nullptr;
 }
+
 
 
 } // namespace compiler

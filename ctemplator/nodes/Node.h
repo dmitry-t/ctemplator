@@ -1,12 +1,12 @@
 #pragma once
 
 namespace ctemplator {
-namespace tree {
+namespace nodes {
 
 class Node
 {
 
 };
 
-} // namespace tree
+} // namespace nodes
 } // namespace ctemplator
