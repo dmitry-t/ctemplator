@@ -1,6 +1,7 @@
 #pragma once
 
-#include "ctemplator/compiler/Token.h"
+#include "ctemplator/compiler/TokenStrings.h"
+#include "ctemplator/compiler/TokenType.h"
 
 #include <string>
 #include <vector>
@@ -11,13 +12,18 @@ namespace compiler {
 class Tokenizer
 {
 public:
-    Tokenizer(std::string text, std::vector<Token> tokens);
+    typedef std::pair<TokenType, std::string> Token;
 
-    std::pair<Token, std::string> nextToken();
+    Tokenizer(std::string text, TokenStrings tokenStrings);
+
+    Token nextToken();
 
 private:
+    bool find(const TokenStrings::TokenInfo& token, size_t& begin);
+
     std::string text_;
-    std::vector<Token> tokens_;
+    std::vector<std::pair<TokenType, TokenStrings::TokenInfo>> tokens_;
+    size_t cursor_;
 };
 
 } // namespace compiler

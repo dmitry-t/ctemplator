@@ -5,9 +5,12 @@ namespace compiler {
 
 enum class TokenType
 {
-    FULL,
-    OPEN,
-    CLOSE,
+    TEXT,
+    EXPR,
+    OP_SINGLE,
+    OP_BEGIN,
+    OP_END,
+    EOS,
 };
 
 } // namespace compiler

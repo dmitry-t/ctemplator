@@ -10,5 +10,4 @@ add_library(ctemplator
 target_link_libraries(ctemplator
     ctemplator-compiler
     ctemplator-nodes
-    PocoFoundation
 )

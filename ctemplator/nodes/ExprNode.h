@@ -7,10 +7,10 @@
 namespace ctemplator {
 namespace nodes {
 
-class TextNode : public LeafNode
+class ExprNode : public LeafNode
 {
 public:
-    TextNode(std::string value);
+    ExprNode(std::string value);
 
     const std::string& value() const;
 

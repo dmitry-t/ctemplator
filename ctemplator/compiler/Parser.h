@@ -1,8 +1,7 @@
 #pragma once
 
-#include "ctemplator/compiler/Token.h"
-#include "ctemplator/compiler/Tokenizer.h"
 #include "ctemplator/nodes/Node.h"
+#include "ctemplator/compiler/TokenStrings.h"
 
 #include <memory>
 
@@ -12,7 +11,12 @@ namespace compiler {
 class Parser
 {
 public:
-    std::unique_ptr<nodes::Node> parse(const std::string& text);
+    Parser(TokenStrings tokenStrings = TokenStrings());
+
+    nodes::Node parse(const std::string& text);
+
+private:
+    TokenStrings tokenStrings_;
 };
 
 } // namespace compiler
