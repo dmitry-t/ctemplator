@@ -17,10 +17,21 @@ std::string Engine::render(
     const std::string& templatePath,
     const Poco::Dynamic::Var& vars)
 {
-    auto content = fileStorage_.readFileContent(templatePath);
-    nodes::Node node = parser_.parse(content);
     std::ostringstream stream;
-    node.render(vars, stream);
+
+    auto i = cache_.find(templatePath);
+    if (i != cache_.end())
+    {
+        auto& node = cache_.at(templatePath);
+        node.render(vars, stream);
+    }
+    else
+    {
+        auto content = fileStorage_.readFileContent(templatePath);
+        nodes::Node node = parser_.parse(content);
+        cache_.emplace(templatePath, std::move(node));
+        node.render(vars, stream);
+    }
     return stream.str();
 }
 

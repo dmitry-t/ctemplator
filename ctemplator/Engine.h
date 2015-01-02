@@ -2,10 +2,12 @@
 
 #include "ctemplator/FileStorage.h"
 #include "ctemplator/compiler/Parser.h"
+#include "ctemplator/nodes/Node.h"
 
 #include "Poco/Any.h"
 
 #include <string>
+#include <unordered_map>
 
 namespace ctemplator {
 
@@ -21,6 +23,7 @@ public:
 private:
     FileStorage fileStorage_;
     compiler::Parser parser_;
+    std::unordered_map<std::string, nodes::Node> cache_;
 };
 
 } // namespace ctemplator
