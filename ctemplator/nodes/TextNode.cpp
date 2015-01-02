@@ -7,26 +7,26 @@ namespace {
 const size_t MAX_PRINT = 20;
 } // namespace
 
-TextNode::TextNode(std::string value) :
-    value_(value)
+TextNode::TextNode(std::string text) :
+    text_(text)
 {
 }
 
-const std::string& TextNode::value() const
+void TextNode::render(const Var& vars, std::ostream& stream) const
 {
-    return value_;
+    stream << text_;
 }
 
 bool TextNode::equals(const AbstractNode& node) const
 {
     auto rhs = dynamic_cast<const TextNode*>(&node);
-    return rhs && rhs->value_ == value_;
+    return rhs && rhs->text_ == text_;
 }
 
 void TextNode::dump(std::ostream& stream) const
 {
-    stream << "text: \"" << (value_.size() <= MAX_PRINT ?
-                    value_ : value_.substr(0, MAX_PRINT))
+    stream << "text: \"" << (text_.size() <= MAX_PRINT ?
+                    text_ : text_.substr(0, MAX_PRINT))
             << "\"";
 }
 

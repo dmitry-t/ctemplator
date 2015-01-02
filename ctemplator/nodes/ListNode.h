@@ -13,6 +13,8 @@ class ListNode : public AbstractNode
 public:
     virtual ListNode& add(Node node) override;
 
+
+    virtual void render(const Var& vars, std::ostream& stream) const override;
     virtual bool isList() const override;
     virtual bool equals(const AbstractNode& node) const override;
     virtual void dump(std::ostream& stream) const override;

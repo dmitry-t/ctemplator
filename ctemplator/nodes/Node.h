@@ -2,6 +2,8 @@
 
 #include "ctemplator/nodes/AbstractNode.h"
 
+#include "Poco/Dynamic/Var.h"
+
 #include <iostream>
 #include <memory>
 
@@ -11,6 +13,8 @@ namespace nodes {
 class Node
 {
 public:
+    typedef Poco::Dynamic::Var Var;
+
     Node() { }
     Node(std::unique_ptr<AbstractNode> node);
     Node(Node&& other) = default;
@@ -33,6 +37,8 @@ public:
 
     void add(Node node);
     void add(std::unique_ptr<Node> node);
+
+    void render(const Var& vars, std::ostream& stream) const;
 
     Node& operator=(Node&& rhs) = default;
     Node& operator=(const Node& rhs) = delete;

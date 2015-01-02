@@ -26,6 +26,14 @@ void Node::add(Node node)
     node_->add(std::move(node));
 }
 
+void Node::render(const Var& vars, std::ostream& stream) const
+{
+    if (node_)
+    {
+        node_->render(vars, stream);
+    }
+}
+
 bool Node::operator==(const Node& rhs) const
 {
     if (!node_ || !rhs.node_)

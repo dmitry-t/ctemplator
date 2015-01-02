@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ctemplator/expr/Expression.h"
 #include "ctemplator/nodes/LeafNode.h"
 
 #include <string>
@@ -10,15 +11,14 @@ namespace nodes {
 class ExprNode : public LeafNode
 {
 public:
-    ExprNode(std::string value);
+    ExprNode(expr::Expression expr);
 
-    const std::string& value() const;
-
+    virtual void render(const Var& vars, std::ostream& stream) const override;
     virtual bool equals(const AbstractNode& node) const override;
     virtual void dump(std::ostream& stream) const override;
 
 private:
-    std::string value_;
+    expr::Expression expr_;
 };
 
 } // namespace nodes

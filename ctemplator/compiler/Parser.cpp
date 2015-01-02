@@ -1,6 +1,7 @@
 #include "ctemplator/compiler/Parser.h"
 
 #include "ctemplator/compiler/Tokenizer.h"
+#include "ctemplator/expr/VariableExpr.h"
 #include "ctemplator/nodes/TextNode.h"
 #include "ctemplator/nodes/ExprNode.h"
 
@@ -21,7 +22,7 @@ Node createTextNode(Tokenizer::Token token)
 
 Node createExprNode(Tokenizer::Token token)
 {
-    return ExprNode(std::move(token.second));
+    return ExprNode(expr::VariableExpr(token.second));
 }
 
 Node createOpSingleNode(Tokenizer::Token token)

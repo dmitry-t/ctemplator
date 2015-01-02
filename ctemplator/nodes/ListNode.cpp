@@ -13,6 +13,14 @@ ListNode& ListNode::add(Node node)
     return *this;
 }
 
+void ListNode::render(const Var& vars, std::ostream& stream) const
+{
+    for (auto& node : nodes_)
+    {
+        node.render(vars, stream);
+    }
+}
+
 bool ListNode::isList() const
 {
     return true;

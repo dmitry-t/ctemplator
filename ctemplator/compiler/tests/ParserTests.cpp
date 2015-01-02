@@ -1,4 +1,5 @@
 #include "ctemplator/compiler/Parser.h"
+#include "ctemplator/expr/VariableExpr.h"
 #include "ctemplator/nodes/ListNode.h"
 #include "ctemplator/nodes/TextNode.h"
 #include "ctemplator/nodes/ExprNode.h"
@@ -9,6 +10,7 @@ namespace ctemplator {
 namespace compiler {
 namespace tests {
 
+using namespace expr;
 using namespace nodes;
 
 TEST(compiler_Parser, emptyContent)
@@ -26,7 +28,7 @@ TEST(compiler_Parser, textOnly)
 TEST(compiler_Parser, exprOnly)
 {
     Parser parser;
-    ASSERT_EQ(Node(ExprNode("abc")), parser.parse("{abc}"));
+    ASSERT_EQ(Node(ExprNode(VariableExpr("abc"))), parser.parse("{abc}"));
 }
 
 TEST(compiler_Parser, textAndExpr)
@@ -35,7 +37,7 @@ TEST(compiler_Parser, textAndExpr)
     ASSERT_EQ(
             Node(ListNode()
                     .add(TextNode("abc"))
-                    .add(ExprNode("ABC"))),
+                    .add(ExprNode(VariableExpr("ABC")))),
             parser.parse("abc{ABC}"));
 }
 

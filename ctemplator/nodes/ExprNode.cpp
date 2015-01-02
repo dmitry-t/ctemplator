@@ -3,25 +3,25 @@
 namespace ctemplator {
 namespace nodes {
 
-ExprNode::ExprNode(std::string value) :
-    value_(value)
+ExprNode::ExprNode(expr::Expression expr) :
+    expr_(std::move(expr))
 {
 }
 
-const std::string& ExprNode::value() const
+void ExprNode::render(const Var& vars, std::ostream& stream) const
 {
-    return value_;
+    stream << expr_.evaluate(vars);
 }
 
 bool ExprNode::equals(const AbstractNode& node) const
 {
     auto rhs = dynamic_cast<const ExprNode*>(&node);
-    return rhs && rhs->value_ == value_;
+    return rhs && rhs->expr_ == expr_;
 }
 
 void ExprNode::dump(std::ostream& stream) const
 {
-    stream << "expr: " << value_;
+    stream << "expr: " << expr_;
 }
 
 
