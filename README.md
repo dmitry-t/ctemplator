@@ -1,4 +1,4 @@
 CTemplator
 ==========
 
-A C++ template engine with a simple API and customizable syntax.
+A text template engine with a simple API and customizable syntax, written in C++.
