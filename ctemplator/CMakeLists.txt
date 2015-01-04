@@ -2,6 +2,7 @@ add_subdirectory(compiler)
 add_subdirectory(nodes)
 add_subdirectory(expr)
 add_subdirectory(vars)
+add_subdirectory(utils)
 
 add_library(ctemplator
     Engine.cpp

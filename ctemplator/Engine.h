@@ -4,6 +4,7 @@
 #include "ctemplator/compiler/Parser.h"
 #include "ctemplator/nodes/Node.h"
 #include "ctemplator/vars/Var.h"
+#include "ctemplator/utils/LRUCache.h"
 
 #include <string>
 #include <unordered_map>
@@ -22,7 +23,7 @@ public:
 private:
     FileStorage fileStorage_;
     compiler::Parser parser_;
-    std::unordered_map<std::string, nodes::Node> cache_;
+    LRUCache<std::string, nodes::Node, 20> cache_;
 };
 
 } // namespace ctemplator

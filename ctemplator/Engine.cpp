@@ -18,18 +18,17 @@ std::string Engine::render(
 {
     std::ostringstream stream;
 
-    auto i = cache_.find(templatePath);
-    if (i != cache_.end())
+    auto nodePtr = cache_.get(templatePath);
+    if (nodePtr)
     {
-        auto& node = cache_.at(templatePath);
-        node.render(vars, stream);
+        nodePtr->render(vars, stream);
     }
     else
     {
         auto content = fileStorage_.readFileContent(templatePath);
         nodes::Node node = parser_.parse(content);
         node.render(vars, stream); // Render before move below
-        cache_.emplace(templatePath, std::move(node));
+        cache_.put(templatePath, std::move(node));
     }
     return stream.str();
 }
