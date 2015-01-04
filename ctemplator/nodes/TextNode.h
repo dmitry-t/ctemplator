@@ -14,7 +14,6 @@ public:
 
     const std::string& value() const;
 
-
     virtual void render(const Var& vars, std::ostream& stream) const override;
     virtual bool equals(const AbstractNode& node) const override;
     virtual void dump(std::ostream& stream) const override;

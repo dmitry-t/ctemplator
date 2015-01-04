@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Poco/Dynamic/Var.h"
+#include "ctemplator/vars/Var.h"
+
 #include "AbstractExpr.h"
 
 #include <iostream>
@@ -12,7 +13,7 @@ namespace expr {
 class Expression
 {
 public:
-    typedef Poco::Dynamic::Var Var;
+    typedef vars::Var Var;
 
     template<class T>
     Expression(T expr) :

@@ -2,7 +2,6 @@
 
 #include "ctemplator/vars/Object.h"
 #include "ctemplator/vars/Array.h"
-#include "ctemplator/vars/ConcreteVar.h"
 
 namespace ctemplator {
 namespace vars {

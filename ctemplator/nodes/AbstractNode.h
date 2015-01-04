@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Poco/Dynamic/Var.h"
+#include "ctemplator/vars/Var.h"
 
 #include <iostream>
 
@@ -18,7 +18,7 @@ namespace nodes {
 class AbstractNode
 {
 public:
-    typedef Poco::Dynamic::Var Var;
+    typedef vars::Var Var;
 
     virtual AbstractNode& add(Node node) = 0;
 

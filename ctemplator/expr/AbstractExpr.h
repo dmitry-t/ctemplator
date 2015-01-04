@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Poco/Dynamic/Var.h"
+#include "ctemplator/vars/Var.h"
 
 #include <iostream>
 
@@ -10,7 +10,7 @@ namespace expr {
 class AbstractExpr
 {
 public:
-    typedef Poco::Dynamic::Var Var;
+    typedef vars::Var Var;
 
     virtual std::string evaluate(const Var& vars) const = 0;
     virtual bool equals(const AbstractExpr& expr) const = 0;

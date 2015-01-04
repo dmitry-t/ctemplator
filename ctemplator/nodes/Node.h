@@ -1,8 +1,7 @@
 #pragma once
 
 #include "ctemplator/nodes/AbstractNode.h"
-
-#include "Poco/Dynamic/Var.h"
+#include "ctemplator/vars/Var.h"
 
 #include <iostream>
 #include <memory>
@@ -13,7 +12,7 @@ namespace nodes {
 class Node
 {
 public:
-    typedef Poco::Dynamic::Var Var;
+    typedef vars::Var Var;
 
     Node() { }
     Node(std::unique_ptr<AbstractNode> node);

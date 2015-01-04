@@ -3,8 +3,7 @@
 #include "ctemplator/FileStorage.h"
 #include "ctemplator/compiler/Parser.h"
 #include "ctemplator/nodes/Node.h"
-
-#include "Poco/Any.h"
+#include "ctemplator/vars/Var.h"
 
 #include <string>
 #include <unordered_map>
@@ -18,7 +17,7 @@ public:
 
     std::string render(
             const std::string& templatePath,
-            const Poco::Dynamic::Var& vars);
+            const vars::Var& vars);
 
 private:
     FileStorage fileStorage_;

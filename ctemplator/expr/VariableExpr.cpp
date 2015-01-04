@@ -10,8 +10,7 @@ VariableExpr::VariableExpr(std::string expr) :
 
 std::string VariableExpr::evaluate(const Var& vars) const
 {
-    auto& var = vars[expr_];
-    return var.isEmpty() ? "" : var.toString();
+    return vars.get(expr_).string();
 }
 
 bool VariableExpr::equals(const AbstractExpr& expr) const

@@ -1,8 +1,7 @@
 #include "ctemplator/Engine.h"
 
 #include "ctemplator/compiler/Tokenizer.h"
-
-#include "Poco/Dynamic/Var.h"
+#include "ctemplator/vars/Var.h"
 
 #include <sstream>
 
@@ -15,7 +14,7 @@ Engine::Engine(const std::string& templateStorageRoot) :
 
 std::string Engine::render(
     const std::string& templatePath,
-    const Poco::Dynamic::Var& vars)
+    const vars::Var& vars)
 {
     std::ostringstream stream;
 
@@ -29,8 +28,8 @@ std::string Engine::render(
     {
         auto content = fileStorage_.readFileContent(templatePath);
         nodes::Node node = parser_.parse(content);
+        node.render(vars, stream); // Render before move below
         cache_.emplace(templatePath, std::move(node));
-        node.render(vars, stream);
     }
     return stream.str();
 }
