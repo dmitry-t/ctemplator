@@ -4,6 +4,7 @@ add_library(ctemplator-nodes
     LeafNode.cpp
     TextNode.cpp
     ExprNode.cpp
+    EmptyNode.cpp
 )
 
 target_link_libraries(ctemplator-nodes

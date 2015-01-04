@@ -23,6 +23,7 @@ public:
     virtual AbstractNode& add(Node node) = 0;
 
     virtual void render(const Var& vars, std::ostream& stream) const = 0;
+    virtual bool isEmpty() const = 0;
     virtual bool isList() const = 0;
     virtual bool equals(const AbstractNode& node) const = 0;
     virtual void dump(std::ostream& stream) const = 0;

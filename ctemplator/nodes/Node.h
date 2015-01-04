@@ -14,7 +14,7 @@ class Node
 public:
     typedef vars::Var Var;
 
-    Node() { }
+    Node();
     Node(std::unique_ptr<AbstractNode> node);
     Node(Node&& other) = default;
     Node(const Node& other) = delete;
@@ -37,6 +37,7 @@ public:
     void add(Node node);
     void add(std::unique_ptr<Node> node);
 
+    void isEmpty() const;
     void render(const Var& vars, std::ostream& stream) const;
 
     Node& operator=(Node&& rhs) = default;

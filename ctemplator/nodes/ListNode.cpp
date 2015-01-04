@@ -22,6 +22,11 @@ void ListNode::render(const Var& vars, std::ostream& stream) const
     }
 }
 
+bool ListNode::isEmpty() const
+{
+    return false;
+}
+
 bool ListNode::isList() const
 {
     return true;
