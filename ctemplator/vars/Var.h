@@ -3,6 +3,8 @@
 #include "ctemplator/vars/Array.h"
 #include "ctemplator/vars/Object.h"
 
+#include "boost/const_string/const_string.hpp"
+
 #include <memory>
 
 namespace ctemplator {
@@ -11,6 +13,8 @@ namespace vars {
 class Var
 {
 public:
+    typedef boost::const_string<char> ConstString;
+
     static const Var EMPTY;
 
     Var();
@@ -31,10 +35,12 @@ public:
     const std::string& string() const;
 
     bool isObject() const;
+    const Var& get(const char* name) const;
     const Var& get(const std::string& name) const;
+    const Var& get(ConstString name) const;
 
     bool isArray() const;
-    const Var& get(size_t index) const;
+    const Var& at(size_t index) const;
 
     bool operator==(const Var& rhs) const;
     void dump(std::ostream& stream) const;

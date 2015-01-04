@@ -22,7 +22,7 @@ public:
 
     Array&& add(Var&& var);
 
-    const Var& get(std::size_t index) const;
+    const Var& at(std::size_t index) const;
     bool operator==(const Array& rhs) const;
     void dump(std::ostream& stream) const;
 

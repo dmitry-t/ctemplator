@@ -21,7 +21,7 @@ Array&& Array::add(Var&& var)
     return std::move(*this);
 }
 
-const Var& Array::get(std::size_t index) const
+const Var& Array::at(std::size_t index) const
 {
     static const Var EMPTY;
     return index < values_.size() ? values_[index] : EMPTY;

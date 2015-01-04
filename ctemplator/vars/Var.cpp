@@ -105,9 +105,9 @@ bool Var::isArray() const
     return type_ == Type::ARRAY;
 }
 
-const Var& Var::get(size_t index) const
+const Var& Var::at(size_t index) const
 {
-    return isArray() ? array_.get(index) : EMPTY;
+    return isArray() ? array_.at(index) : EMPTY;
 }
 
 bool Var::isObject() const
@@ -115,7 +115,17 @@ bool Var::isObject() const
     return type_ == Type::OBJECT;
 }
 
+const Var& Var::get(const char* name) const
+{
+    return isObject() ? object_.get(name) : EMPTY;
+}
+
 const Var& Var::get(const std::string& name) const
+{
+    return isObject() ? object_.get(name) : EMPTY;
+}
+
+const Var& Var::get(ConstString name) const
 {
     return isObject() ? object_.get(name) : EMPTY;
 }
