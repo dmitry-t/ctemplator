@@ -1,6 +1,7 @@
 #include "ctemplator/nodes/ListNode.h"
 
 #include "ctemplator/nodes/Node.h"
+#include "ctemplator/utils/CollectionUtils.h"
 
 #include <algorithm>
 
@@ -29,29 +30,12 @@ bool ListNode::isList() const
 bool ListNode::equals(const AbstractNode& node) const
 {
     auto rhs = dynamic_cast<const ListNode*>(&node);
-    return rhs &&
-            nodes_.size() == rhs->nodes_.size() &&
-            std::equal(
-                    nodes_.begin(),
-                    nodes_.end(),
-                    rhs->nodes_.begin());
+    return rhs && utils::equal(nodes_, rhs->nodes_);
 }
 
 void ListNode::dump(std::ostream& stream) const
 {
-    bool printComma = false;
-    for (auto& node : nodes_)
-    {
-        if (printComma)
-        {
-            stream << ", ";
-        }
-        else
-        {
-            printComma = true;
-        }
-        stream << node;
-    }
+    utils::dump(stream, nodes_, ", ");
 }
 
 } // namespace nodes
