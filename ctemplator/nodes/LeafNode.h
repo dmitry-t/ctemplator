@@ -14,6 +14,7 @@ public:
 
     virtual bool isEmpty() const override;
     virtual bool isList() const override;
+    virtual void release() override;
 };
 
 } // namespace nodes

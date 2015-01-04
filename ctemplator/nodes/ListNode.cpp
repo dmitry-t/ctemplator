@@ -43,5 +43,10 @@ void ListNode::dump(std::ostream& stream) const
     utils::dump(stream, nodes_, ", ");
 }
 
+void ListNode::release()
+{
+    delete this;
+}
+
 } // namespace nodes
 } // namespace ctemplator

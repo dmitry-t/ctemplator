@@ -1,19 +1,15 @@
 #include "ctemplator/compiler/Tokenizer.h"
 
-#include <string>
+#include <algorithm>
 #include <stdexcept>
+#include <string>
 
 namespace ctemplator {
 namespace compiler {
 
-Tokenizer::Tokenizer(std::string text, TokenStrings tokenStrings) :
+Tokenizer::Tokenizer(std::string text, std::vector<TokenDescription> tokens) :
     text_(std::move(text)),
-    tokens_({
-        { TokenType::EXPR, tokenStrings.expression },
-        { TokenType::OP_SINGLE, tokenStrings.operatorSingle },
-        { TokenType::OP_BEGIN, tokenStrings.operatorBegin },
-        { TokenType::OP_END, tokenStrings.operatorEnd },
-    }),
+    tokens_(tokens),
     cursor_(0)
 {
 }
@@ -22,13 +18,13 @@ Tokenizer::Token Tokenizer::nextToken()
 {
     if (cursor_ == text_.size())
     {
-        return { TokenType::EOS, "" };
+        return { EOS, "" };
     }
-    std::pair<TokenType, TokenStrings::TokenInfo>* found = nullptr;
+    TokenDescription* found = nullptr;
     size_t tokenBegin = text_.size();
     for (auto& token : tokens_)
     {
-        size_t pos = text_.find(token.second.first, cursor_);
+        size_t pos = text_.find(token.begin_, cursor_);
         if (pos == std::string::npos)
         {
             continue;
@@ -46,26 +42,31 @@ Tokenizer::Token Tokenizer::nextToken()
     if (!found)
     {
         Token token {
-            TokenType::TEXT,
+            TEXT,
             text_.substr(cursor_, tokenBegin - cursor_)
         };
         cursor_ = tokenBegin;
         return token;
     }
+    if (found->end_.empty())
+    {
+        cursor_ = tokenBegin + found->begin_.size();
+        return { found->id_, "" };
+    }
     size_t tokenEnd = text_.find(
-            found->second.second,
-            tokenBegin + found->second.first.size() + 1);
+            found->end_,
+            tokenBegin + found->begin_.size());
     if (tokenEnd == std::string::npos)
     {
         throw std::runtime_error("Unclosed token");
     }
     Token token {
-        found->first,
+        found->id_,
         text_.substr(
-                tokenBegin + found->second.first.size(),
-                tokenEnd - tokenBegin - 1)
+                tokenBegin + found->begin_.size(),
+                tokenEnd - tokenBegin - found->begin_.size())
     };
-    cursor_ = tokenEnd + found->second.second.size();
+    cursor_ = tokenEnd + found->end_.size();
     return token;
 }
 

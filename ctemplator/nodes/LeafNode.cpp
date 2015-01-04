@@ -22,5 +22,10 @@ bool LeafNode::isList() const
     return false;
 }
 
+void LeafNode::release()
+{
+    delete this;
+}
+
 } // namespace nodes
 } // namespace ctemplator

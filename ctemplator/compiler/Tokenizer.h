@@ -1,7 +1,7 @@
 #pragma once
 
+#include "ctemplator/compiler/TokenDescription.h"
 #include "ctemplator/compiler/TokenStrings.h"
-#include "ctemplator/compiler/TokenType.h"
 
 #include <string>
 #include <vector>
@@ -12,17 +12,21 @@ namespace compiler {
 class Tokenizer
 {
 public:
-    typedef std::pair<TokenType, std::string> Token;
+    enum PredefinedTokenIds
+    {
+        EOS = 0,
+        TEXT = 1,
+    };
 
-    Tokenizer(std::string text, TokenStrings tokenStrings);
+    typedef std::pair<size_t, std::string> Token;
+
+    Tokenizer(std::string text, std::vector<TokenDescription> tokens);
 
     Token nextToken();
 
 private:
-    bool find(const TokenStrings::TokenInfo& token, size_t& begin);
-
     std::string text_;
-    std::vector<std::pair<TokenType, TokenStrings::TokenInfo>> tokens_;
+    std::vector<TokenDescription> tokens_;
     size_t cursor_;
 };
 

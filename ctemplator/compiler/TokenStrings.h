@@ -8,11 +8,11 @@ namespace compiler {
 
 struct TokenStrings
 {
-    typedef std::pair<std::string, std::string> TokenInfo;
-    TokenInfo expression = { "{", "}" }; // TokenType::EXPR
-    TokenInfo operatorSingle = { "<#", "/>" }; // TokenType::OP_SINGLE
-    TokenInfo operatorBegin = { "<#", ">" }; // TokenType::OP_BEGIN
-    TokenInfo operatorEnd = { "</#", ">" }; // TokenType::OP_END
+    typedef std::pair<std::string, std::string> TokenParts;
+    TokenParts expression_ = { "{", "}" };
+    TokenParts if_ = { "<#if", ">" };
+    TokenParts else_ = { "<#else", "/>" };
+    TokenParts endif_ = { "</#if", ">" };
 };
 
 } // namespace compiler

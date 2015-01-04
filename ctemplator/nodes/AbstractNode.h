@@ -27,6 +27,7 @@ public:
     virtual bool isList() const = 0;
     virtual bool equals(const AbstractNode& node) const = 0;
     virtual void dump(std::ostream& stream) const = 0;
+    virtual void release() = 0;
 };
 
 } // namespace nodes

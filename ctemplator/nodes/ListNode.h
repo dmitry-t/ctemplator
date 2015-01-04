@@ -18,6 +18,7 @@ public:
     virtual bool isList() const override;
     virtual bool equals(const AbstractNode& node) const override;
     virtual void dump(std::ostream& stream) const override;
+    virtual void release() override;
 
 private:
     std::vector<Node> nodes_;

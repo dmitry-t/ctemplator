@@ -3,7 +3,9 @@
 namespace ctemplator {
 namespace nodes {
 
-EmptyNode::EmptyNode()
+EmptyNode EmptyNode::INSTANCE;
+
+EmptyNode::~EmptyNode()
 {
 }
 
@@ -25,6 +27,9 @@ void EmptyNode::dump(std::ostream& stream) const
 {
 }
 
+void EmptyNode::release()
+{
+}
 
 } // namespace nodes
 } // namespace ctemplator

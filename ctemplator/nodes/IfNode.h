@@ -1,25 +1,30 @@
 #pragma once
 
+#include "ctemplator/expr/Expression.h"
 #include "ctemplator/nodes/LeafNode.h"
+#include "ctemplator/nodes/Node.h"
 
 #include <string>
 
 namespace ctemplator {
 namespace nodes {
 
-class EmptyNode : public LeafNode
+class IfNode : public LeafNode
 {
 public:
-    static EmptyNode INSTANCE;
+    IfNode(expr::Expression expr);
 
-    virtual bool isEmpty() const override;
+    IfNode& setTrue(Node&& node);
+    IfNode& setFalse(Node&& node);
+
     virtual void render(const Var& vars, std::ostream& stream) const override;
     virtual bool equals(const AbstractNode& node) const override;
     virtual void dump(std::ostream& stream) const override;
-    virtual void release() override;
 
 private:
-    ~EmptyNode();
+    Node trueNode_;
+    Node falseNode_;
+    expr::Expression expr_;
 };
 
 } // namespace nodes

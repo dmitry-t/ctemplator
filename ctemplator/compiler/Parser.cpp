@@ -1,11 +1,13 @@
 #include "ctemplator/compiler/Parser.h"
 
+#include "ctemplator/compiler/TokenDescription.h"
 #include "ctemplator/compiler/Tokenizer.h"
 #include "ctemplator/expr/VariableExpr.h"
-#include "ctemplator/nodes/TextNode.h"
 #include "ctemplator/nodes/ExprNode.h"
+#include "ctemplator/nodes/TextNode.h"
+#include "ctemplator/nodes/IfNode.h"
 
-#include <stack>
+#include <algorithm>
 #include <unordered_set>
 
 namespace ctemplator {
@@ -15,25 +17,15 @@ using namespace nodes;
 
 namespace {
 
-Node createTextNode(Tokenizer::Token token)
+enum Lexeme
 {
-    return TextNode(std::move(token.second));
-}
-
-Node createExprNode(Tokenizer::Token token)
-{
-    return ExprNode(expr::VariableExpr(token.second));
-}
-
-Node createOpSingleNode(Tokenizer::Token token)
-{
-    return {};
-}
-
-Node createOpBeginNode(Tokenizer::Token token)
-{
-    return {};
-}
+    EOS = Tokenizer::EOS,
+    TEXT = Tokenizer::TEXT,
+    EXPR,
+    IF,
+    ELSE,
+    ENDIF,
+};
 
 } // namespace
 
@@ -42,47 +34,80 @@ Parser::Parser(TokenStrings tokenStrings) :
 {
 }
 
-nodes::Node Parser::parse(const std::string& text)
-{
-    Node rootNode;
-    std::stack<Node*> nodes;
-    Tokenizer tokenizer(text, tokenStrings_);
-    Node* node = &rootNode;
+Node parseIf(Tokenizer& tokenizer, std::string ifExpr);
 
+bool valueInList(size_t value, std::initializer_list<size_t>& list)
+{
+    return std::find(list.begin(), list.end(), value) != list.end();
+}
+
+size_t parseUntil(
+        Tokenizer& tokenizer,
+        std::initializer_list<size_t> tokenIds,
+        Node& parent)
+{
+    size_t tokenId = EOS;
     for (;;)
     {
         auto token = tokenizer.nextToken();
-        if (token.first == TokenType::EOS)
+        tokenId = token.first;
+        if (tokenId == EOS || valueInList(tokenId, tokenIds))
         {
             break;
         }
-        switch (token.first)
+        switch (tokenId)
         {
-        case TokenType::TEXT:
-            node->add(createTextNode(std::move(token)));
+        case TEXT:
+            parent.add(TextNode(std::move(token.second)));
             break;
 
-        case TokenType::EXPR:
-            node->add(createExprNode(std::move(token)));
+        case EXPR:
+            parent.add(ExprNode(expr::VariableExpr(token.second)));
             break;
 
-        case TokenType::OP_SINGLE:
-            node->add(createOpSingleNode(std::move(token)));
+        case IF:
+            parent.add(parseIf(tokenizer, token.second));
             break;
 
-        case TokenType::OP_BEGIN:
-            node->add(createOpBeginNode(std::move(token)));
+        case ELSE:
+            throw std::runtime_error("Unexpected 'else' clause");
             break;
 
-        case TokenType::OP_END:
-            if (nodes.empty())
-            {
-                throw std::runtime_error("Unbalanced operator");
-            }
-            nodes.pop();
+        case ENDIF:
+            throw std::runtime_error("Unexpected 'endif' clause");
             break;
         }
     }
+    return tokenId;
+}
+
+Node parseIf(Tokenizer& tokenizer, std::string ifExpr)
+{
+    IfNode ifNode(expr::VariableExpr(std::move(ifExpr)));
+    Node trueNode;
+    size_t tokenId = parseUntil(tokenizer, {ELSE, ENDIF}, trueNode);
+    ifNode.setTrue(std::move(trueNode));
+    if (tokenId == ELSE)
+    {
+        Node falseNode;
+        parseUntil(tokenizer, {ENDIF}, falseNode);
+        ifNode.setFalse(std::move(falseNode));
+    }
+    return ifNode;
+}
+
+
+nodes::Node Parser::parse(const std::string& text)
+{
+    std::vector<TokenDescription> tokens {
+        { EXPR, "{", "}" },
+        { IF, "<#if ", ">" },
+        { ELSE, "<#else", "/>" },
+        { ENDIF, "</#if>" },
+    };
+    Tokenizer tokenizer(text, tokens);
+    Node rootNode;
+    parseUntil(tokenizer, {}, rootNode);
     return rootNode;
 }
 

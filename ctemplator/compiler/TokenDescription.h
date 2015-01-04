@@ -1,16 +1,15 @@
 #pragma once
 
+#include <string>
+
 namespace ctemplator {
 namespace compiler {
 
-enum class TokenType
+struct TokenDescription
 {
-    TEXT,
-    EXPR,
-    OP_SINGLE,
-    OP_BEGIN,
-    OP_END,
-    EOS,
+    size_t id_;
+    std::string begin_;
+    std::string end_;
 };
 
 } // namespace compiler
