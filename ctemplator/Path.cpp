@@ -2,8 +2,6 @@
 
 #include "Poco/String.h"
 #include "Poco/StringTokenizer.h"
-#include "contrib/poco-1.6.0/Foundation/include/Poco/String.h"
-#include "contrib/poco-1.6.0/Foundation/include/Poco/StringTokenizer.h"
 
 #include <cstring>
 

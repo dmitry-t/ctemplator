@@ -2,7 +2,7 @@
 #include "ctemplator/vars/Array.h"
 #include "ctemplator/vars/Object.h"
 
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 namespace ctemplator {
 namespace vars {

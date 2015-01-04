@@ -7,5 +7,5 @@ add_library(ctemplator-nodes
 )
 
 target_link_libraries(ctemplator-nodes
-    
+    ctemplator-vars
 )

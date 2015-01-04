@@ -4,7 +4,7 @@
 #include "ctemplator/nodes/TextNode.h"
 #include "ctemplator/nodes/ExprNode.h"
 
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 namespace ctemplator {
 namespace compiler {
