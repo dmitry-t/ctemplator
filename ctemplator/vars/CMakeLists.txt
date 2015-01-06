@@ -1,7 +1,8 @@
 add_library(ctemplator-vars
-    Var.cpp
-    Object.cpp
     Array.cpp
+    DerivedObject.cpp
+    Object.cpp
+    Var.cpp
 )
 
 target_link_libraries(ctemplator-vars

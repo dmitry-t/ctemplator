@@ -5,6 +5,7 @@
 #include "ctemplator/nodes/ExprNode.h"
 #include "ctemplator/nodes/ListNode.h"
 #include "ctemplator/nodes/TextNode.h"
+#include "ctemplator/nodes/ForNode.h"
 
 #include <gtest/gtest.h>
 
@@ -89,6 +90,22 @@ TEST(compiler_Parser, ifWithElseOperator)
                     .setTrue(TextNode("abc"))
                     .setFalse(TextNode("ABC"))),
             parser.parse("<#if expr>abc<#else/>ABC</#if>"));
+}
+
+TEST(compiler_Parser, forOperator)
+{
+    Parser parser;
+    ASSERT_EQ(
+            Node(ForNode("i", "list").setRoutine(TextNode("abc"))),
+            parser.parse("<#for i in list>abc</#for>"));
+}
+
+TEST(compiler_Parser, emptyForOperator)
+{
+    Parser parser;
+    ASSERT_EQ(
+            Node(ForNode("i", "list")),
+            parser.parse("<#for i in list></#for>"));
 }
 
 } // namespace tests

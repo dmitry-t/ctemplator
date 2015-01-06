@@ -1,6 +1,7 @@
 #include "ctemplator/vars/Var.h"
 #include "ctemplator/vars/Array.h"
 #include "ctemplator/vars/Object.h"
+#include "ctemplator/vars/DerivedObject.h"
 
 #include <gtest/gtest.h>
 
@@ -128,6 +129,28 @@ TEST(vars_Var, objectDotNotationAccess)
     ASSERT_EQ(Var("4"), var.get("b.b2"));
     ASSERT_EQ(Var(), var.get("a.c"));
     ASSERT_EQ(Var(), var.get("a.a1.c"));
+}
+
+TEST(vars_Var, derivedObjectBaseAndNewVarsAccess)
+{
+    Var base(Object()
+            .set("a", Var(Object()
+                    .set("a1", "1"))));
+    Var derived(base.derive()
+            .set("b", Object()
+                    .set("b1", "2")));
+    ASSERT_EQ(Var("1"), derived.get("a.a1"));
+    ASSERT_EQ(Var("2"), derived.get("b.b1"));
+}
+
+TEST(vars_Var, derivedObjectHidesOverriddenVar)
+{
+    Var base(Object()
+            .set("a", "1"));
+    Var derived(base.derive()
+            .set("a", "2"));
+    ASSERT_EQ(Var("1"), base.get("a"));
+    ASSERT_EQ(Var("2"), derived.get("a"));
 }
 
 } // namespace tests

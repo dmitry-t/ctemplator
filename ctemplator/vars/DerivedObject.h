@@ -17,28 +17,27 @@ class Var;
 namespace ctemplator {
 namespace vars {
 
-class Object
+class DerivedObject
 {
 public:
     typedef boost::const_string<char> ConstString;
 
-    Object();
-    Object(std::vector<std::pair<std::string, Var>>&& fields);
+    DerivedObject(const Var& baseObject);
 
-    Object&& set(std::string name, Var value);
+    DerivedObject&& set(std::string name, Var value);
 
-    const Var& get(const char* name) const;
-    const Var& get(const std::string& name) const;
     const Var& get(ConstString name) const;
-    bool operator==(const Object& rhs) const;
+    bool operator==(const DerivedObject& rhs) const;
     void dump(std::ostream& stream) const;
 
 private:
     typedef std::pair<std::string, Var> Field;
+
     std::vector<Field> fields_;
+    const Var* baseObject_;
 };
 
-std::ostream& operator<<(std::ostream& lhs, const Object& rhs);
+std::ostream& operator<<(std::ostream& lhs, const DerivedObject& rhs);
 
 } // namespace vars
 } // namespace ctemplator

@@ -4,7 +4,7 @@ namespace ctemplator {
 namespace nodes {
 
 namespace {
-const size_t MAX_PRINT = 20;
+const size_t MAX_PRINT = 50;
 } // namespace
 
 TextNode::TextNode(std::string text) :
@@ -25,9 +25,17 @@ bool TextNode::equals(const AbstractNode& node) const
 
 void TextNode::dump(std::ostream& stream) const
 {
-    stream << "text: \"" << (text_.size() <= MAX_PRINT ?
-                    text_ : text_.substr(0, MAX_PRINT))
-            << "\"";
+    const std::string ELLIPSIS = "...";
+    stream << "text: \"";
+    if (text_.size() <= MAX_PRINT)
+    {
+        stream << text_;
+    }
+    else
+    {
+        stream << text_.substr(0, MAX_PRINT - ELLIPSIS.size()) << ELLIPSIS;
+    }
+    stream << "\"";
 }
 
 

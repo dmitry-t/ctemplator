@@ -10,9 +10,12 @@ struct TokenStrings
 {
     typedef std::pair<std::string, std::string> TokenParts;
     TokenParts expression_ = { "{", "}" };
-    TokenParts if_ = { "<#if", ">" };
-    TokenParts else_ = { "<#else", "/>" };
-    TokenParts endif_ = { "</#if", ">" };
+    TokenParts if_ = { "<#if ", ">" }; // <#if expr>
+    TokenParts else_ = { "<#else/>", "" };
+    TokenParts ifEnd_ = { "</#if>", "" };
+    TokenParts for_ = { "<#for ", ">" };
+    TokenParts forIn_ = { "in" , "" }; // <#for i in list>
+    TokenParts forEnd_ = { "</#for>", "" };
 };
 
 } // namespace compiler

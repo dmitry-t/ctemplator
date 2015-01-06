@@ -1,22 +1,21 @@
-#include "ctemplator/vars/Object.h"
+#include "ctemplator/vars/DerivedObject.h"
 
 #include "ctemplator/vars/Var.h"
 #include "ctemplator/utils/CollectionUtils.h"
 
+#include "boost/const_string/io.hpp"
+
+#include <algorithm>
+
 namespace ctemplator {
 namespace vars {
 
-Object::Object()
+DerivedObject::DerivedObject(const Var& baseObject) :
+    baseObject_(&baseObject)
 {
 }
 
-Object::Object(std::vector<std::pair<std::string, Var>>&& fields) :
-    fields_(std::move(fields))
-{
-}
-
-
-Object&& Object::set(std::string name, Var value)
+DerivedObject&& DerivedObject::set(std::string name, Var value)
 {
     auto i = std::find_if(
             fields_.begin(),
@@ -33,18 +32,7 @@ Object&& Object::set(std::string name, Var value)
     return std::move(*this);
 }
 
-
-const Var& Object::get(const char* name) const
-{
-    return get(ConstString(name));
-}
-
-const Var& Object::get(const std::string& name) const
-{
-    return get(ConstString(name));
-}
-
-const Var& Object::get(ConstString name) const
+const Var& DerivedObject::get(ConstString name) const
 {
     size_t dotPos = name.find(".");
     if (name.find(".") == std::string::npos)
@@ -57,15 +45,23 @@ const Var& Object::get(ConstString name) const
     }
 
     const Var& ownVar = get(name.substr(0, dotPos));
-    return ownVar.get(name.substr(dotPos + 1));
+    const Var& var = ownVar.get(name.substr(dotPos + 1));
+    return var.isEmpty() ? baseObject_->get(name) : var;
 }
 
-bool Object::operator==(const Object& rhs) const
+
+bool DerivedObject::operator==(const DerivedObject& rhs) const
 {
-    return utils::equal(fields_, rhs.fields_);
+    return utils::equal(
+            fields_,
+            rhs.fields_,
+            [](const Field& f1, const Field& f2)
+            {
+                return f1.first == f2.first && f1.second == f2.second;
+            });
 }
 
-void Object::dump(std::ostream& stream) const
+void DerivedObject::dump(std::ostream& stream) const
 {
     stream << "{";
     utils::dump(
@@ -79,11 +75,10 @@ void Object::dump(std::ostream& stream) const
     stream << "}";
 }
 
-std::ostream& operator<<(std::ostream& lhs, const Object& rhs)
+std::ostream& operator<<(std::ostream& lhs, const DerivedObject& rhs)
 {
     rhs.dump(lhs);
     return lhs;
 }
-
 } // namespace vars
 } // namespace ctemplator

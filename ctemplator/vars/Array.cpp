@@ -21,6 +21,16 @@ Array&& Array::add(Var&& var)
     return std::move(*this);
 }
 
+Array::ConstIterator Array::begin() const
+{
+    return values_.begin();
+}
+
+Array::ConstIterator Array::end() const
+{
+    return values_.end();
+}
+
 const Var& Array::at(std::size_t index) const
 {
     static const Var EMPTY;
